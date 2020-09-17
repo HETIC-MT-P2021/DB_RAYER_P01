@@ -13,14 +13,27 @@ func GetCustomerByNumber(customerNumber int) (e.Customer, error) {
 
 	var customer e.Customer
 
-	const query = `SELECT *,
-						(select concat('', string_agg(o.orderNumber, ','))
-						FROM orders as o
-								LEFT JOIN customers as c
-										ON (c.customerNumber = o.customerNumber)
-						WHERE customerNumber = $1) as orders
-					FROM customers as c
-					WHERE customerNumber = $1`
+	const query = `SELECT 
+					c.customerNumber,
+					c.customerName, 
+					c.contactFirstName,
+					c.contactLastName,
+					c.phone,
+					c.addressLine1,
+					c.addressLine2,
+					c.city,
+					c.state,
+					c.postalCode,
+					c.country,
+					c.salesRepEmployeeNumber,
+					c.creditLimit,
+					(SELECT GROUP_CONCAT(o.orderNumber)
+						FROM orders o
+						LEFT JOIN customers c
+							ON c.customerNumber = o.customerNumber
+					)
+					FROM customers c
+					WHERE c.customerNumber = ?`
 	err := db.DB.QueryRow(query, customerNumber).Scan(&customer.CustomerNumber, &customer.CustomerName, &customer.ContactLastName, &customer.ContactFirstName, &customer.Phone, &customer.AddressLine1, &customer.AddressLine2, &customer.City, &customer.State, &customer.PostalCode, &customer.Country, &customer.SalesRepEmployeeNumber, &customer.CreditLimit, &customer.Order)
 
 	if err == sql.ErrNoRows {

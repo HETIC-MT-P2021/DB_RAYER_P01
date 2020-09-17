@@ -3,7 +3,7 @@ version: "3.7"
 services:
   go:
     build:
-      context: api/
+      context: ./api
     restart: always
     depends_on:
       - db
@@ -13,16 +13,19 @@ services:
       - 1323:80
 
   db:
-    image: mysql:8
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: classicmodels
-      MYSQL_USER: user
-      MYSQL_PASSWORD: root
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: dev
     volumes:
-      - db-data-mysql:/var/lib/mysql
+      - db-data:/var/lib/mysql
+      - ./api/migrations:/docker-entrypoint-initdb.d
     ports:
-      - 33061:3306
+      - 13306:3306
 
 volumes:
-  db-data-mysql:
+  db-data:
