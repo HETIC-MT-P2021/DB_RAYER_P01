@@ -1,0 +1,7 @@
+APP_NAME: db_rayer_p01
+DB_HOST: db
+DB_PORT: 5432
+DB_NAME: db-test
+DB_USER: postgres
+DB_PASSWORD: password
+
