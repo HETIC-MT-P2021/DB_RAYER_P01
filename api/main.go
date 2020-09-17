@@ -4,9 +4,9 @@ package main
 import (
 	"fmt"
 
-	r "api/router"
+	r "github.com/HETIC-MT-P2021/DB_RAYER_P01/api/router"
 
-	"api/db"
+	"github.com/HETIC-MT-P2021/DB_RAYER_P01/api/db"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"

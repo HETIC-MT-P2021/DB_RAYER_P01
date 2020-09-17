@@ -8,7 +8,7 @@ services:
     depends_on:
       - db
     volumes:
-      - api/config.yaml:/config.yaml
+      - ./api/config.yaml:/config.yaml
     ports:
       - 1323:80
 
@@ -21,7 +21,7 @@ services:
       PGDATA: /data/postgres
     volumes:
       - db-data:/data/postgres
-      - api/migrations/mysqlsampledatabase.sql:/docker-entrypoint-initdb.d/1_init_schema.sql
+      - ./api/migrations/mysqlsampledatabase.sql:/docker-entrypoint-initdb.d/1_init_schema.sql
     ports:
       - 5432:5432
 

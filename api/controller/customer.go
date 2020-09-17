@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	e "api/entity"
-	"api/model"
+	e "github.com/HETIC-MT-P2021/DB_RAYER_P01/api/entity"
+	"github.com/HETIC-MT-P2021/DB_RAYER_P01/api/model"
 
 	"github.com/labstack/echo/v4"
 )
