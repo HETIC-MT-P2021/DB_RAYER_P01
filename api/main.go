@@ -17,7 +17,7 @@ import (
 func initConfig() {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath("./back")
+	viper.AddConfigPath("./api")
 	viper.AddConfigPath(".")
 	viper.AutomaticEnv()
 

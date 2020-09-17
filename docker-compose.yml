@@ -13,17 +13,16 @@ services:
       - 1323:80
 
   db:
-    image: postgres:12.2-alpine
+    image: mysql:8
     environment:
-      POSTGRES_DB: classicmodels
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      PGDATA: /data/postgres
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: classicmodels
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: password
     volumes:
-      - db-data:/data/postgres
-      - ./api/migrations/mysqlsampledatabase.sql:/docker-entrypoint-initdb.d/1_init_schema.sql
+      - db-data-mysql:/var/lib/mysql
     ports:
-      - 5432:5432
+      - 33061:3306
 
 volumes:
-  db-data:
+  db-data-mysql:
