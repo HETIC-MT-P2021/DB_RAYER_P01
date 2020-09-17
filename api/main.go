@@ -4,8 +4,9 @@ package main
 import (
 	"fmt"
 
-	"/db"
-	r "/router"
+	r "api/router"
+
+	"api/db"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
