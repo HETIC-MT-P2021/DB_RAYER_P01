@@ -17,8 +17,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: classicmodels
-      MYSQL_USER: mysql
-      MYSQL_PASSWORD: password
+      MYSQL_USER: user
+      MYSQL_PASSWORD: root
     volumes:
       - db-data-mysql:/var/lib/mysql
     ports:
