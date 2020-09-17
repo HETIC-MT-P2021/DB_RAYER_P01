@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"regexp"
 
-	"api/controller"
+	"github.com/HETIC-MT-P2021/DB_RAYER_P01/api/controller"
 
 	"github.com/labstack/echo/v4"
 )
@@ -32,6 +32,6 @@ func SetAPIRoutes(e *echo.Echo) {
 	// Restricted group
 	r := e.Group("/api")
 
-	r.GET("/customer/:id", controller.GetCustumer, ParamValidation)
+	r.GET("/customer/:id", controller.GetCustomer, ParamValidation)
 
 }

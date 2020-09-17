@@ -9,7 +9,9 @@ import (
 )
 
 // GetCustomerByNumber returns data of a customer.
-func GetCustomerByNumber(customerNumber int) (customer e.Customer, error) {
+func GetCustomerByNumber(customerNumber int) (e.Customer, error) {
+
+	var customer e.Customer
 
 	const query = `SELECT *,
 						(select concat('', string_agg(o.orderNumber, ','))
