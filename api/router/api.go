@@ -15,5 +15,6 @@ func SetAPIRoutes(e *echo.Echo) {
 	r.GET("/customer/:id", controller.GetCustomer, helper.ParamValidation)
 	r.GET("/order/:id/product", controller.GetOrderProduct, helper.ParamValidation)
 	r.GET("/employee", controller.GetAllEmployee)
+	r.GET("/office", controller.GetAllOffice)
 
 }

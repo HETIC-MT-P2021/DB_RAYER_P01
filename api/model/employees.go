@@ -7,7 +7,6 @@ import (
 
 // GetAllEmployee returns list of data of all employees.
 func GetAllEmployee() ([]e.Employee, error) {
-	var employee e.Employee
 
 	var employeeList []e.Employee
 
@@ -29,6 +28,7 @@ func GetAllEmployee() ([]e.Employee, error) {
 	defer rows.Close()
 
 	for rows.Next() {
+		var employee e.Employee
 		err = rows.Scan(&employee.EmployeeNumber, &employee.EmployeeLastName, &employee.EmployeeFirstName, &employee.EmployeeExtension, &employee.EmployeeEmail, &employee.EmployeeOfficeCode, &employee.EmployeeReportTo, &employee.EmployeeJobTitle)
 
 		if err != nil {

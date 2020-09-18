@@ -8,7 +8,6 @@ import (
 // GetProductByOrderNumber returns data of a customer.
 func GetProductByOrderNumber(orderNumber int) ([]e.Product, error) {
 
-	var product e.Product
 	var productList []e.Product
 
 	const query = `SELECT
@@ -35,6 +34,7 @@ func GetProductByOrderNumber(orderNumber int) ([]e.Product, error) {
 	defer rows.Close()
 
 	for rows.Next() {
+		var product e.Product
 		err = rows.Scan(&product.ProductCode, &product.ProductName, &product.ProductLine, &product.ProductScale, &product.ProductVendor, &product.ProductDescription, &product.QuantityInStock, &product.BuyPrice, &product.MSRP)
 
 		if err != nil {
@@ -42,8 +42,6 @@ func GetProductByOrderNumber(orderNumber int) ([]e.Product, error) {
 		}
 
 		productList = append(productList, product)
-
-		product = e.Product{}
 	}
 
 	err = rows.Err()
