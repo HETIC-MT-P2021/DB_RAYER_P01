@@ -4,8 +4,9 @@ package main
 import (
 	"fmt"
 
-	"/db"
-	r "/router"
+	r "github.com/HETIC-MT-P2021/DB_RAYER_P01/api/router"
+
+	"github.com/HETIC-MT-P2021/DB_RAYER_P01/api/db"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -16,7 +17,7 @@ import (
 func initConfig() {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath("./back")
+	viper.AddConfigPath("./api")
 	viper.AddConfigPath(".")
 	viper.AutomaticEnv()
 

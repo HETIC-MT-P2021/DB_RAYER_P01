@@ -4,24 +4,24 @@ import (
 	"database/sql"
 	"fmt"
 
-	_ "github.com/lib/pq" // Go Postgres driver
+	_ "github.com/go-sql-driver/mysql" // MySQL package
 	"github.com/spf13/viper"
 )
 
 var (
+	// DB var
 	DB *sql.DB
 )
 
-// GetPostgresDataSourceName returns environment variable for database connection.
-func GetPostgresDataSourceName() string {
+// GetMySQLDataSourceName returns environment variable for database connection.
+func GetMySQLDataSourceName() string {
 	return fmt.Sprintf(
-		"postgres://%s:%s@%s:%s/%s?sslmode=disable&application_name=%s",
+		"%s:%s@tcp(%s:%s)/%s",
 		viper.GetString("DB_USER"),
 		viper.GetString("DB_PASSWORD"),
 		viper.GetString("DB_HOST"),
 		viper.GetString("DB_PORT"),
 		viper.GetString("DB_NAME"),
-		viper.GetString("APP_NAME"),
 	)
 }
 
@@ -29,9 +29,9 @@ func GetPostgresDataSourceName() string {
 func Connect() {
 	var err error
 
-	dsn := GetPostgresDataSourceName()
+	dsn := GetMySQLDataSourceName()
 
-	DB, err = sql.Open("postgres", dsn)
+	DB, err = sql.Open("mysql", dsn)
 	if err != nil {
 		panic(err)
 	}
