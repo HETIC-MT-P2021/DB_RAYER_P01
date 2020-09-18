@@ -1,10 +1,8 @@
-package router
+package helper
 
 import (
 	"net/http"
 	"regexp"
-
-	"github.com/HETIC-MT-P2021/DB_RAYER_P01/api/controller"
 
 	"github.com/labstack/echo/v4"
 )
@@ -25,13 +23,4 @@ func ParamValidation(next echo.HandlerFunc) echo.HandlerFunc {
 
 		return next(c)
 	}
-}
-
-// SetAPIRoutes define all apis routes.
-func SetAPIRoutes(e *echo.Echo) {
-	// Restricted group
-	r := e.Group("/api")
-
-	r.GET("/customer/:id", controller.GetCustomer, ParamValidation)
-
 }
