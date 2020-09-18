@@ -14,12 +14,12 @@ import (
 func GetCustomer(c echo.Context) error {
 	customerNumber, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, helper.SetResponse(http.StatusBadRequest, err.Error(), EmptyValue))
+		return c.JSON(http.StatusBadRequest, helper.SetResponse(http.StatusBadRequest, err.Error(), helper.EmptyValue))
 	}
 
 	res, err := model.GetCustomerByNumber(customerNumber)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, helper.SetResponse(http.StatusBadRequest, err.Error(), EmptyValue))
+		return c.JSON(http.StatusBadRequest, helper.SetResponse(http.StatusBadRequest, err.Error(), helper.EmptyValue))
 	}
 
 	return c.JSON(http.StatusOK, res)
