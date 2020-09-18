@@ -1,7 +1,7 @@
 package entity
 
 import (
-	d "github.com/HETIC-MT-P2021/DB_RAYER_P01/api/db"
+	h "github.com/HETIC-MT-P2021/DB_RAYER_P01/api/helper"
 )
 
 // Customer defines the structure of the customer entity.
@@ -12,12 +12,15 @@ type Customer struct {
 	ContactFirstName       string        `json:"contactFirstName"`
 	Phone                  string        `json:"phone"`
 	AddressLine1           string        `json:"adressLine1"`
-	AddressLine2           d.NullString  `json:"adressLine2"`
+	AddressLine2           h.NullString  `json:"adressLine2"`
 	City                   string        `json:"city"`
-	State                  d.NullString  `json:"state"`
-	PostalCode             d.NullString  `json:"postalCode"`
+	State                  h.NullString  `json:"state"`
+	PostalCode             h.NullString  `json:"postalCode"`
 	Country                string        `json:"country"`
-	SalesRepEmployeeNumber d.NullInt64   `json:"salesRepEmployeeNumber"`
-	CreditLimit            d.NullFloat64 `json:"creditLimit"`
-	Order                  d.NullString  `json:"orders"`
+	SalesRepEmployeeNumber h.NullInt64   `json:"salesRepEmployeeNumber"`
+	CreditLimit            h.NullFloat64 `json:"creditLimit"`
+	Order                  h.NullString  `json:"orders"`
+	Product                h.NullString  `json:"products"`
+	NumberProduct          h.NullString  `json:"numberProducts"`
+	TotalPrice             h.NullString  `json:"totalPrice"`
 }
