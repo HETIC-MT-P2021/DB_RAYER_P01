@@ -31,10 +31,11 @@ func GetCustomerByNumber(customerNumber int) (e.Customer, error) {
 						FROM orders o
 						LEFT JOIN customers c
 							ON c.customerNumber = o.customerNumber
+						WHERE o.customerNumber = ?
 					)
 					FROM customers c
 					WHERE c.customerNumber = ?`
-	err := db.DB.QueryRow(query, customerNumber).Scan(&customer.CustomerNumber, &customer.CustomerName, &customer.ContactLastName, &customer.ContactFirstName, &customer.Phone, &customer.AddressLine1, &customer.AddressLine2, &customer.City, &customer.State, &customer.PostalCode, &customer.Country, &customer.SalesRepEmployeeNumber, &customer.CreditLimit, &customer.Order)
+	err := db.DB.QueryRow(query, customerNumber, customerNumber).Scan(&customer.CustomerNumber, &customer.CustomerName, &customer.ContactLastName, &customer.ContactFirstName, &customer.Phone, &customer.AddressLine1, &customer.AddressLine2, &customer.City, &customer.State, &customer.PostalCode, &customer.Country, &customer.SalesRepEmployeeNumber, &customer.CreditLimit, &customer.Order)
 
 	if err == sql.ErrNoRows {
 		return customer, errors.New("Customer is not found")

@@ -19,5 +19,5 @@ type Customer struct {
 	Country                string        `json:"country"`
 	SalesRepEmployeeNumber d.NullInt64   `json:"salesRepEmployeeNumber"`
 	CreditLimit            d.NullFloat64 `json:"creditLimit"`
-	Order                  d.NullString  `json:"order"`
+	Order                  d.NullString  `json:"orders"`
 }
