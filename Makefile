@@ -1,88 +1,68 @@
-# Color
-RED		:= $(shell printf "\033[31m")
-GREEN	:= $(shell printf "\033[32m")
-YELLOW	:= $(shell printf "\033[33m")
-BLUE	:= $(shell printf "\033[34m")
-BOLD	:= $(shell printf "\033[1m")
-RESET	:= $(shell printf "\033[m")
-
 DOCKER_COMPOSE ?= docker-compose
+GO_WORKDIR ?= ""
 
 .PHONY: help
-help: # Provides help information on available commands
-	@printf "Usage: make COMMAND\n\n"
+help: ## Provides help information on available commands
+	@printf "Usage: make <command>\n\n"
 	@printf "Commands:\n"
 	@awk -F ':(.*)## ' '/^[a-zA-Z0-9%\\\/_.-]+:(.*)##/ { \
-	 printf "  \033[36m%-20s\033[0m %s\n", $$1, $$NF \
+	  printf "  \033[36m%-30s\033[0m %s\n", $$1, $$NF \
 	}' $(MAKEFILE_LIST)
+	@printf "\nNOTE: the / is interchangable with the : in target names\n"
 
-.PHONY: build
-build: ## Build all Docker images of the project
+.PHONY: compose/build
+compose/build: ## Build all Docker images of the project
 	@$(DOCKER_COMPOSE) build
 
-.PHONY: up
-up: build ## Builds and start all containers (in the background)
+.PHONY: compose/up
+compose/up: ## Start all containers (in the background)
 	@$(DOCKER_COMPOSE) up -d
-	@make about
-	@make urls
 
-.PHONY: down
-down: ## Stops and deletes containers and networks created by "up".
+.PHONY: compose/down
+compose/down: ## Stops and deletes containers and networks created by "up".
 	@$(DOCKER_COMPOSE) down
 
-.PHONY: restart
-restart: down up ## Restarts all containers
+.PHONY: compose/restart
+compose/restart: compose/down compose/up ## Restarts all containers
 
-.PHONY: purge
-purge: ## Stops and deletes containers, volumes, images and networks created by "up".
+.PHONY: compose/start
+compose/start: ## Starts existing containers for a service
+	@$(DOCKER_COMPOSE) start
+
+.PHONY: compose/stop
+compose/stop: ## Stops containers without removing them
+	@$(DOCKER_COMPOSE) stop
+
+.PHONY: compose/purge/local
+compose/purge/local:
+	@$(DOCKER_COMPOSE) down -v --rmi local
+
+.PHONY: compose/purge
+compose/purge: compose/purge/local ## Stops and deletes containers, volumes, images (local) and networks created by "up".
+
+.PHONY: compose/purge/all
+compose/purge/all: ## Stops and deletes containers, volumes, images (all) and networks created by "up".
 	@$(DOCKER_COMPOSE) down -v --rmi all
 
-.PHONY: rebuild
-rebuild: down build up ## Rebuild all the project
+.PHONY: compose/rebuild
+compose/rebuild: compose/down compose/build compose/up ## Rebuild the project
 
-.PHONY: rebuild/back
-rebuild/back: ## Rebuild the back project
-	@$(DOCKER_COMPOSE) build go
-	@make up
-
-DOCKER_INPECT_FORMAT__AWK ?= "'\''{{.Name}} : {{range $$p, $$conf := .NetworkSettings.Ports}}{{$$p}} -> {{(index $$conf 0).HostIp}}:{{(index $$conf 0).HostPort}}\t{{end}}'\''"
-
-.PHONY: urls
-urls: ## Get project's URL
-	@echo "------------------------------------------------------------"
-	@echo "${GREEN}You can access your project at the following URLS:${RESET}"
-	@echo "------------------------------------------------------------"
-	@$(DOCKER_COMPOSE) ps -q | awk '{ \
-		cmd_docker_inspect = sprintf("docker inspect --format=%s %s", ${DOCKER_INPECT_FORMAT__AWK}, $$0) ; \
-		cmd_docker_inspect | getline docker_inspect ; close(cmd_docker_inspect) ; \
-		gsub(/0.0.0.0/, "http://localhost", docker_inspect) ; \
-		split(docker_inspect, urls, "\t") ; \
-		printf "%s\n", urls[1] ; \
-		i = 2 ; while (i <= length(urls)) { \
-		index_tab = index(docker_inspect,":") ; \
-		printf "%*s %*s\n", index_tab, "", index_tab, urls[i]; i++ \
-		} ; \
-	}'
-
-.PHONY: about
-about:
-	@echo " DB_RAYER_P01 • Axel Rayer"
-
-.PHONY: lint/go
-lint/go: ## Run golangci-lint (All-In-One config)
-	@docker run --rm -v ${PWD}/back:/app -w /app golangci/golangci-lint golangci-lint run --out-format tab | \
+.PHONY: lint
+lint: ## Run golangci-lint (All-In-One config)
+	@docker run --rm -v ${PWD}${GO_WORKDIR}:/app -w /app golangci/golangci-lint golangci-lint run --out-format tab | \
 	awk -F '[[:space:]][[:space:]]+' '{ \
+		error_file = $$1 ; \
 		linter_name = $$2 ; \
 		error_message = $$3 ; \
-		split($$1, error_file_info, ":") ; \
-		error_file_path = sprintf("./back/%s", error_file_info[1]) ; \
+		split(error_file, error_file_info, ":") ; \
+		error_file_path = sprintf(".%s/%s", ${GO_WORKDIR}, error_file_info[1]) ; \
 		error_line_number = error_file_info[2] ; \
 		error_col_number = error_file_info[3] ; \
 		\
 		dashed_line_length = 80 ; \
-		dashed_line = sprintf("%*s", dashed_line_length, ""); gsub(/ /, "- ", dashed_line) ; \
+		dashed_line = sprintf("%*s", dashed_line_length, ""); gsub(/ /, "-", dashed_line) ; \
 		\
-		printf "\n\033[36m- - %s %0.*s %s\033[m", toupper(linter_name), dashed_line_length - length($$1) - length($$2), dashed_line, fileInfo[1] ; \
+		printf "\n\033[36m-- %s %0.*s %s\033[m", toupper(linter_name), dashed_line_length - length($$1) - length($$2), dashed_line, error_file ; \
 		printf "\n\n\033[1mLine %s, Column %s", error_line_number, error_col_number ; \
 		printf "\n\n\033[1m%s", error_message ; \
 		\
@@ -92,3 +72,7 @@ lint/go: ## Run golangci-lint (All-In-One config)
 		\
 		printf "\n\033[31m\033[1m%*s\033[m", error_col_number + length(error_line_number) + 2, "^" ; \
 	} END { printf "\n\033[31m%s errors detected\n", NR	}'
+
+
+%:
+	@$(MAKE) -s $(subst :,/,$@)
