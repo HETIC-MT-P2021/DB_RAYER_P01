@@ -2,35 +2,18 @@
 package main
 
 import (
-	"fmt"
-
-	r "github.com/HETIC-MT-P2021/DB_RAYER_P01/api/router"
-
-	"github.com/HETIC-MT-P2021/DB_RAYER_P01/api/db"
+	c "github.com/HETIC-MT-P2021/DB_RAYER_P01/config"
+	db "github.com/HETIC-MT-P2021/DB_RAYER_P01/database"
+	r "github.com/HETIC-MT-P2021/DB_RAYER_P01/router"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/spf13/viper"
 )
-
-// initConfig set all configuration for the project
-func initConfig() {
-	viper.SetConfigName("config")
-	viper.SetConfigType("yaml")
-	viper.AddConfigPath("./api")
-	viper.AddConfigPath(".")
-	viper.AutomaticEnv()
-
-	err := viper.ReadInConfig() // Find and read the config file
-	if err != nil {             // Handle errors reading the config file
-		panic(fmt.Errorf("fatal error config file: %s", err))
-	}
-}
 
 // main launch all part of the project
 func main() {
-	// setup env
-	initConfig()
+
+	c.InitConfig()
 
 	db.Connect()
 

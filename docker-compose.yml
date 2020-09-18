@@ -3,12 +3,13 @@ version: "3.7"
 services:
   go:
     build:
-      context: ./api
+      context: .
+      dockerfile: ./.docker/go/Dockerfile
     restart: always
     depends_on:
       - db
     volumes:
-      - ./api/config.yaml:/config.yaml
+      - ./config.yaml:/config.yaml
     ports:
       - 1323:80
 
@@ -23,7 +24,7 @@ services:
       MYSQL_PASSWORD: dev
     volumes:
       - db-data:/var/lib/mysql
-      - ./api/migrations:/docker-entrypoint-initdb.d
+      - ./database/migrations:/docker-entrypoint-initdb.d
     ports:
       - 13306:3306
 
