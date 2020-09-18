@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"errors"
 
-	"github.com/HETIC-MT-P2021/DB_RAYER_P01/api/db"
-	e "github.com/HETIC-MT-P2021/DB_RAYER_P01/api/entity"
+	db "github.com/HETIC-MT-P2021/DB_RAYER_P01/database"
+	e "github.com/HETIC-MT-P2021/DB_RAYER_P01/entity"
 )
 
 // GetCustomerByNumber returns data of a customer.

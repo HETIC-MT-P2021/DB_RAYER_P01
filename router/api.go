@@ -1,8 +1,8 @@
 package router
 
 import (
-	"github.com/HETIC-MT-P2021/DB_RAYER_P01/api/controller"
-	"github.com/HETIC-MT-P2021/DB_RAYER_P01/api/helper"
+	"github.com/HETIC-MT-P2021/DB_RAYER_P01/controller"
+	"github.com/HETIC-MT-P2021/DB_RAYER_P01/helper"
 
 	"github.com/labstack/echo/v4"
 )

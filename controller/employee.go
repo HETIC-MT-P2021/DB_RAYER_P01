@@ -3,8 +3,8 @@ package controller
 import (
 	"net/http"
 
-	"github.com/HETIC-MT-P2021/DB_RAYER_P01/api/helper"
-	"github.com/HETIC-MT-P2021/DB_RAYER_P01/api/model"
+	"github.com/HETIC-MT-P2021/DB_RAYER_P01/helper"
+	"github.com/HETIC-MT-P2021/DB_RAYER_P01/model"
 
 	"github.com/labstack/echo/v4"
 )
