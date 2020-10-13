@@ -34,7 +34,7 @@ GET(api/office)
 
 ## Documentation
 
-The technical documentation of the project is available on GoDoc here : [Technical Documentation](https://godoc.org/github.com/HETIC-MT-P2021/DB_RAYER_P01/api)
+The technical documentation of the project is available on GoDoc here : [Technical Documentation](https://godoc.org/github.com/HETIC-MT-P2021/DB_RAYER_P01)
 
 ## Author
 
