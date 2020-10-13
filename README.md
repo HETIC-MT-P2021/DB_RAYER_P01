@@ -19,16 +19,16 @@ You can now access the api: [http://localhost:1323/](http://localhost:1323/)
 ## Endpoints
 
 ```bash
-// Get all customers and infos
+## Get all customers and infos
 GET(api/customer/id)
 
-// Get all products of an order
+## Get all products of an order
 GET(api/order/:id/product)
 
-// Get all employees
+## Get all employees
 GET(api/employee)
 
-// Get all offices
+## Get all offices
 GET(api/office)
 ```
 
