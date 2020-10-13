@@ -19,22 +19,22 @@ You can now access the api: [http://localhost:1323/](http://localhost:1323/)
 ## Endpoints
 
 ```bash
-// Get all customers and infos
+## Get all customers and infos
 GET(api/customer/id)
 
-// Get all products of an order
+## Get all products of an order
 GET(api/order/:id/product)
 
-// Get all employees
+## Get all employees
 GET(api/employee)
 
-// Get all offices
+## Get all offices
 GET(api/office)
 ```
 
 ## Documentation
 
-The technical documentation of the project is available on GoDoc here : [Technical Documentation](https://godoc.org/github.com/HETIC-MT-P2021/DB_RAYER_P01/api)
+The technical documentation of the project is available on GoDoc here : [Technical Documentation](https://godoc.org/github.com/HETIC-MT-P2021/DB_RAYER_P01)
 
 ## Author
 
